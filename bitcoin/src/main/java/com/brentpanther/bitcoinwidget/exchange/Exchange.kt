@@ -66,6 +66,8 @@ enum class Exchange(val exchangeName: String, shortName: String? = null) {
         override fun getValue(coin: String, currency: String, priceType: PriceType): String? {
             return getCriptoYaValue("binancep2p", coin, currency, priceType)
         }
+        override val isViaRelay = true
+        override val relayService = "CriptoYa"
     },
     BINANCE_US("Binance.us") {
 
@@ -207,6 +209,8 @@ enum class Exchange(val exchangeName: String, shortName: String? = null) {
         override fun getValue(coin: String, currency: String, priceType: PriceType): String? {
             return getCriptoYaValue("bitsoalpha", coin, currency, priceType)
         }
+        override val isViaRelay = true
+        override val relayService = "CriptoYa"
     },
     BITSTAMP("Bitstamp") {
 
@@ -309,6 +313,8 @@ enum class Exchange(val exchangeName: String, shortName: String? = null) {
         override fun getValue(coin: String, currency: String, priceType: PriceType): String? {
             return getBlinkTradeValue(coin, currency, priceType)
         }
+        override val isViaRelay = true
+        override val relayService = "BlinkTrade"
     },
     COINBASE("Coinbase") {
 
@@ -446,6 +452,8 @@ enum class Exchange(val exchangeName: String, shortName: String? = null) {
         override fun getValue(coin: String, currency: String, priceType: PriceType): String? {
             return getCriptoYaValue("fiwind", coin, currency, priceType)
         }
+        override val isViaRelay = true
+        override val relayService = "CriptoYa"
     },
     FOXBIT("FoxBit") {
 
@@ -614,6 +622,8 @@ enum class Exchange(val exchangeName: String, shortName: String? = null) {
         override fun getValue(coin: String, currency: String, priceType: PriceType): String? {
             return getCriptoYaValue("lemoncashp2p", coin, currency, priceType)
         }
+        override val isViaRelay = true
+        override val relayService = "CriptoYa"
     },
     LUNO("Luno") {
 
@@ -751,6 +761,8 @@ enum class Exchange(val exchangeName: String, shortName: String? = null) {
         override fun getValue(coin: String, currency: String, priceType: PriceType): String? {
             return getCriptoYaValue("satoshitango", coin, currency, priceType)
         }
+        override val isViaRelay = true
+        override val relayService = "CriptoYa"
     },
     UPHOLD("Uphold") {
 
@@ -771,6 +783,8 @@ enum class Exchange(val exchangeName: String, shortName: String? = null) {
         override fun getValue(coin: String, currency: String, priceType: PriceType): String? {
             return getBlinkTradeValue(coin, currency, priceType)
         }
+        override val isViaRelay = true
+        override val relayService = "BlinkTrade"
     },
     WHITEBIT("WhiteBIT") {
         // v3 and v4 api does not allow for ticker on a single market
@@ -855,6 +869,18 @@ enum class Exchange(val exchangeName: String, shortName: String? = null) {
     abstract fun getValue(coin: String, currency: String, priceType: PriceType): String?
 
     open val hasSpotPriceOnly = false
+
+    /**
+     * Whether this exchange fetches prices via a relay/proxy service rather than directly
+     * from the exchange's own API.
+     */
+    open val isViaRelay = false
+
+    /**
+     * The name of the relay service used to fetch prices, or null if prices are fetched directly.
+     * Known relay services: "CriptoYa" and "BlinkTrade".
+     */
+    open val relayService: String? = null
 
 
     companion object {
